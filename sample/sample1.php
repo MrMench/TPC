@@ -7,9 +7,8 @@
  */
 
 include "../class/tpc.php";
-
 $update = json_decode(file_get_contents("php://input"));
-$tg = new TCP_MB();
+$tg = new TPC_MB();
 $tg->setToken("TELEGRAM:BOTTOKEN");
 $tg->setUpdate($update);
 $tg->setParseMode("Markdown");
@@ -24,5 +23,7 @@ $tg->__sendPhoto("RESEND");
 $tg->__sendVideoNote("RESEND");
 $tg->__sendSticker("RESEND");
 $tg->__sendLocation("RESEND", "RESEND");
-$tg->__sendVenue("RESEND", "RESEND");
-$tg->__sendContact("RESEND");
+$tg->__sendVenue("RESEND", "RESEND", "Hello");
+$tg->__deleteMessage("@PHPBots", "3");
+$tg->__editMessageText("NewText", "@PHPBots", "3", "message_id");
+$tg->__forwardMessage("@PHPBots", "@PayaMofid", "5");
