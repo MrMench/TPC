@@ -6,7 +6,7 @@
  * User : Morteza
  */
 
-class TCP_MB
+class TPC_MB
 {
     private $token;
     private $update;
