@@ -5,3 +5,7 @@ Telegram PHP Class
 
 
 Created By <a href="//t.me/mench">Mench</a> And <a href="//t.me/phpbots">PHPBots TM</a>
+
+# Version
+
+<b> - Version 1-0-0</b>
