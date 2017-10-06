@@ -8,4 +8,4 @@ Created By <a href="//t.me/mench">Mench</a> And <a href="//t.me/phpbots">PHPBots
 
 # Version
 
-<b> - Version 1-0-0</b>
+<b> - Version 1-0-0</b> (Send Date : 2017 / 10 / 06 )
