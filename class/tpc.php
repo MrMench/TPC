@@ -163,6 +163,62 @@ class TPC_MB
     }
 
     /**
+     * @param $chat_id
+     * @param $from_chat_id
+     * @param $message_id
+     * @return mixed
+     */
+    public function __forwardMessage($chat_id, $from_chat_id, $message_id)
+    {
+        return $this->mench("forwardMessage", [
+            "chat_id" => $chat_id,
+            "from_chat_id" => $from_chat_id,
+            "message_id" => $message_id,
+        ]);
+    }
+
+    /**
+     * @param $chat_id
+     * @param $message_id
+     * @return mixed
+     */
+    public function __deleteMessage($chat_id, $message_id)
+    {
+        return $this->mench("deleteMessage", [
+            "chat_id" => $chat_id,
+            "message_id" => $message_id,
+        ]);
+    }
+
+    /**
+     * @param $text
+     * @param $chat_id
+     * @param $message_id_or_inline_message_id
+     * @param string $type
+     * @return mixed
+     */
+    public function __editMessageText($text, $chat_id, $message_id_or_inline_message_id, $type = "message_id")
+    {
+        if ($type == "message_id") {
+            return $this->mench("editMessageText", [
+                "chat_id" => $chat_id,
+                "text" => $text,
+                "parse_mode" => $this->parse_mode,
+                "message_id" => $message_id_or_inline_message_id,
+                "reply_markup" => $this->reply_markup,
+            ]);
+        } else {
+            return $this->mench("editMessageText", [
+                "chat_id" => $chat_id,
+                "text" => $text,
+                "parse_mode" => $this->parse_mode,
+                "inline_message_id" => $message_id_or_inline_message_id,
+                "reply_markup" => $this->reply_markup,
+            ]);
+        }
+    }
+
+    /**
      * @param $video_url
      * @param $video_caption
      * @param string $chat_id
