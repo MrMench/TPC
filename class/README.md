@@ -35,6 +35,34 @@ How To SendMessage?<br>
 <code>$tg->__sendMessage("Message TEXT");</code><br>
 
 
+
+How To SendPhoto?<br>
+
+<code>$tg->__sendPhoto("http://magicode.ir/photo.png", "Caption");</code><br>
+
+
+How To SendVideo?<br>
+
+<code>$tg->__sendVideo("http://magicode.ir/video.mp4", "Caption");</code><br>
+
+
+How To SendDocument?<br>
+
+<code>$tg->__sendDocument("http://magicode.ir/document.docx", "Caption");</code><br>
+
+How To SendAudio?<br>
+
+<code>$tg->__sendAudio("http://magicode.ir/audio.mp3", "Caption");</code><br>
+
+How To SendVideoNote(video message)?<br>
+
+<code>$tg->__sendVideoNote("http://magicode.ir/video.mp4");</code><br>
+
+How To SendVoice?<br>
+
+<code>$tg->__sendVoice("http://magicode.ir/voice.ogg", "Caption");</code><br>
+
+
 How To Force Reply?<br>
 
 <code>$tg->setReplyMarkup($tg->___KeyboardMode("force_reply"));</code><br>
