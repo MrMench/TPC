@@ -470,6 +470,35 @@ class TPC_MB
     }
 
     /**
+     * @param $message_text
+     * @return mixed
+     */
+    public function ___telegramStr($message_text)
+    {
+        $str = str_replace("FROM_FNAME", $this->update->message->from->first_name, $message_text);
+        $str = str_replace("FROM_LNAME", $this->update->message->from->last_name, $str);
+        $str = str_replace("FROM_USERNAME", $this->update->message->from->username, $str);
+        $str = str_replace("FROM_IS_BOT", $this->update->message->from->is_bot, $str);
+        $str = str_replace("FROM_LANG_CODE", $this->update->message->from->language_code, $str);
+        $str = str_replace("FROM_ID", $this->update->message->from->id, $str);
+
+        $str = str_replace("CHAT_ID", $this->update->message->chat->id, $str);
+        $str = str_replace("CHAT_TYPE", $this->update->message->chat->type, $str);
+        $str = str_replace("CHAT_TITLE", $this->update->message->chat->title, $str);
+        $str = str_replace("CHAT_USERNAME", $this->update->message->chat->username, $str);
+        $str = str_replace("CHAT_FNAME", $this->update->message->chat->first_name, $str);
+        $str = str_replace("CHAT_LNAME", $this->update->message->chat->last_name, $str);
+        $str = str_replace("CHAT_AMAA", $this->update->message->chat->all_members_are_administrators, $str);
+        $str = str_replace("CHAT_DESC", $this->update->message->chat->description, $str);
+        $str = str_replace("CHAT_LINK", $this->update->message->chat->invite_link, $str);
+        $str = str_replace("CHAT_MSGPINNED", $this->update->message->chat->pinned_message, $str);
+        $str = str_replace("CHAT_BIG_PHOTO", $this->update->message->chat->photo->big_file_id, $str);
+        $str = str_replace("CHAT_SMALL_PHOTO", $this->update->message->chat->photo->small_file_id, $str);
+
+        return$str;
+    }
+
+    /**
      * @param string $action
      * @param string $chat_id
      * @return mixed
