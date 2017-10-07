@@ -133,7 +133,7 @@ class TPC_MB
             "chat_id" => $chat_id,
             "text" => $message_text,
             "parse_mode" => $this->getParseMode(),
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
             "disable_web_page_preview" => $this->disable_web_page_preview,
         ]);
     }
@@ -158,7 +158,7 @@ class TPC_MB
             "chat_id" => $chat_id,
             "photo" => $photo_url,
             "caption" => $photo_caption,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -205,7 +205,7 @@ class TPC_MB
                 "text" => $text,
                 "parse_mode" => $this->parse_mode,
                 "message_id" => $message_id_or_inline_message_id,
-                "reply_markup" => $this->reply_markup,
+                "reply_markup" => json_encode($this->reply_markup),
             ]);
         } else {
             return $this->mench("editMessageText", [
@@ -213,8 +213,70 @@ class TPC_MB
                 "text" => $text,
                 "parse_mode" => $this->parse_mode,
                 "inline_message_id" => $message_id_or_inline_message_id,
-                "reply_markup" => $this->reply_markup,
+                "reply_markup" => json_encode($this->reply_markup),
             ]);
+        }
+    }
+
+    /**
+     * @param $caption
+     * @param $chat_id
+     * @param $message_id_or_inline_message_id
+     * @param string $type
+     * @return mixed
+     */
+    public function __editMessageCaption($caption, $chat_id, $message_id_or_inline_message_id, $type = "message_id")
+    {
+        if ($type == "message_id") {
+            return $this->mench("editMessageCaption", [
+                "chat_id" => $chat_id,
+                "text" => $caption,
+                "message_id" => $message_id_or_inline_message_id,
+                "reply_markup" => json_encode($this->reply_markup),
+            ]);
+        } else {
+            return $this->mench("editMessageCaption", [
+                "chat_id" => $chat_id,
+                "text" => $caption,
+                "inline_message_id" => $message_id_or_inline_message_id,
+                "reply_markup" => json_encode($this->reply_markup),
+            ]);
+        }
+    }
+
+    /**
+     * @param $chat_id
+     * @param $message_id_or_inline_message_id
+     * @param string $type
+     * @return mixed
+     */
+    public function __editMessageReplyMarkup($chat_id, $message_id_or_inline_message_id, $type = "message_id")
+    {
+        if ($type == "message_id") {
+            return $this->mench("editMessageReplyMarkup", [
+                "chat_id" => $chat_id,
+                "message_id" => $message_id_or_inline_message_id,
+                "reply_markup" => json_encode($this->reply_markup),
+            ]);
+        } else {
+            return $this->mench("editMessageReplyMarkup", [
+                "chat_id" => $chat_id,
+                "inline_message_id" => $message_id_or_inline_message_id,
+                "reply_markup" => json_encode($this->reply_markup),
+            ]);
+        }
+    }
+
+    public function ___KeyboardMode($mode = "NOMARKUP")
+    {
+        $mode = strtolower($mode);
+        switch ($mode) {
+            case "nomarkup":
+                return ["remove_keyboard" => true];
+                break;
+            case "force_reply":
+                return ["force_reply" => true];
+                break;
         }
     }
 
@@ -237,7 +299,7 @@ class TPC_MB
             "chat_id" => $chat_id,
             "video" => $video_url,
             "caption" => $video_caption,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -258,7 +320,7 @@ class TPC_MB
         return $this->mench("sendVideoNote", [
             "chat_id" => $chat_id,
             "video_note" => $video_note_url,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -279,7 +341,7 @@ class TPC_MB
         return $this->mench("sendSticker", [
             "chat_id" => $chat_id,
             "sticker" => $image_url,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -302,7 +364,7 @@ class TPC_MB
             "chat_id" => $chat_id,
             "audio" => $audio_url,
             "caption" => $audio_caption,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -325,7 +387,7 @@ class TPC_MB
             "chat_id" => $chat_id,
             "voice" => $voice_url,
             "caption" => $voice_caption,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -348,7 +410,7 @@ class TPC_MB
             "chat_id" => $chat_id,
             "latitude" => $latitude,
             "longitude" => $longitude,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -377,7 +439,7 @@ class TPC_MB
             "longitude" => $longitude,
             "title" => $title,
             "addres" => $addres,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -403,7 +465,7 @@ class TPC_MB
             "phone_number" => $phone_number,
             "first_name" => $first_name,
             "last_name" => $last_name,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
@@ -443,10 +505,14 @@ class TPC_MB
             "chat_id" => $chat_id,
             "document" => $document_url,
             "caption" => $document_caption,
-            "reply_markup" => $this->reply_markup,
+            "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
+    /**
+     * @param string $chat_id
+     * @return mixed
+     */
     public function isTyping($chat_id = "")
     {
         if ($chat_id == "") {
@@ -488,28 +554,8 @@ class TPC_MB
             $response["id"] = $message->id;
             $response["from"] = ["id" => $message->from->id, "is_bot" => $message->from->is_bot, "first_name" => $message->from->first_name, "last_name" => $message->from->last_name, "username" => $message->from->username, "language_code" => $message->from->language_code,];
             $response["data"] = $message->data;
+            $response["message_id"] = $update->callback_query->message->message_id;
             $response["inline_message_id"] = $message->inline_message_id;
-            $message = $update->callback_query->message;
-            $response["message_id"] = $message->message_id;
-            $response["from"] = ["id" => $message->from->id, "is_bot" => $message->from->is_bot, "first_name" => $message->from->first_name, "last_name" => $message->from->last_name, "username" => $message->from->username, "language_code" => $message->from->language_code,];
-            $response["date"] = $message->date;
-            $response["chat"] = ["id" => $message->chat->id, "type" => $message->chat->type, "title" => $message->chat->title, "username" => $message->chat->username, "first_name" => $message->chat->first_name, "last_name" => $message->chat->last_name, "all_members_are_administrators" => $message->chat->all_members_are_administrators, "description" => $message->chat->description, "invite_link" => $message->chat->invite_link, "pinned_message" => $message->chat->pinned_message, "photo" => ["small_file_id" => $message->chat->small_file_id, "big_file_id" => $message->chat->big_file_id]];
-            $response["forward_from"] = ["id" => $message->forward_from->id, "is_bot" => $message->forward_from->is_bot, "first_name" => $message->forward_from->first_name, "last_name" => $message->forward_from->last_name, "username" => $message->forward_from->username, "language_code" => $message->forward_from->language_code,];
-            $response["forward_from_chat"] = ["id" => $message->forward_from_chat->id, "type" => $message->forward_from_chat->type, "title" => $message->forward_from_chat->title, "username" => $message->forward_from_chat->username, "first_name" => $message->forward_from_chat->first_name, "last_name" => $message->forward_from_chat->last_name, "all_members_are_administrators" => $message->forward_from_chat->all_members_are_administrators, "description" => $message->forward_from_chat->description, "invite_link" => $message->forward_from_chat->invite_link, "pinned_message" => $message->forward_from_chat->pinned_message, "photo" => ["small_file_id" => $message->forward_from_chat->small_file_id, "big_file_id" => $message->forward_from_chat->big_file_id]];
-            $response["forward_from_message_id"] = $message->forward_from_message_id;
-            $response["forward_signature"] = $message->forward_signature;
-            $response["forward_date"] = $message->forward_date;
-            $response["edit_date"] = $message->edit_date;
-            $response["author_signature"] = $message->author_signature;
-            $response["text"] = $message->text;
-            $entites = $message->entities;
-            $entites = $entites[count($entites) - 1];
-            $response["entities"] = ["type" => $entites->type, "offset" => $entites->offset, "length" => $entites->length, "url" => $entites->url, "user" => ["id" => $entites->user->id, "is_bot" => $entites->user->is_bot, "first_name" => $entites->user->first_name, "last_name" => $entites->user->last_name, "username" => $entites->user->username, "language_code" => $entites->user->language_code,]];
-            $response["audio"] = ["file_id" => $message->audio->file_id, "duration" => $message->audio->duration, "performer" => $message->audio->performer, "title" => $message->audio->title, "mime_type" => $message->audio->mime_type, "file_size" => $message->audio->file_size,];
-            $response["document"] = ["file_id" => $message->document->file_id, "thumb" => $message->document->thumb, "file_name" => $message->document->file_name, "mime_type" => $message->document->mime_type, "file_size" => $message->document->file_size,];
-            $response["game"] = ["title" => $message->game->title, "description" => $message->game->description, "text" => $message->game->text,];
-
-
         }
         return $response;
     }
