@@ -66,3 +66,16 @@ How To SendVoice?<br>
 How To Force Reply?<br>
 
 <code>$tg->setReplyMarkup($tg->___KeyboardMode("force_reply"));</code><br>
+
+
+
+Str On The Text<br>
+<code>$tg->___telegramStr("TEXT");</code><br>
+| Parameter    | Description           |
+| :---         |          ---:         |
+| FROM_FNAME   | first name            |
+| FROM_LNAME   | last  name            |
+| FROM_USERNAME| username              |
+| FROM_IS_BOT  | user is bot bool      |
+| FROM_IS_BOT  | user is bot bool      |
+| FROM_ID      | user id               |
