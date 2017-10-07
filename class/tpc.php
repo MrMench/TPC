@@ -536,3 +536,27 @@ class TPC_MB
         }
     }
 }
+
+class MoreFunction extends TPC_MB {
+
+    /**
+     * @param $length
+     * @param string $keyspace
+     * @return string
+     * @throws Exception
+     */
+    public function generateRandomStr(
+        $length = 8,
+        $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    ) {
+        $str = '';
+        $max = mb_strlen($keyspace, '8bit') - 1;
+        if ($max < 1) {
+            throw new Exception('$keyspace must be at least two characters long');
+        }
+        for ($i = 0; $i < $length; ++$i) {
+            $str .= $keyspace[random_int(0, $max)];
+        }
+        return $str;
+    }
+}
