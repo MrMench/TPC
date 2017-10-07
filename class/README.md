@@ -72,7 +72,7 @@ How To Force Reply?<br>
 Str On The Text<br>
 <code>$tg->___telegramStr("TEXT");</code><br>
 | Parameter    | Description           |<br>
-| :---         |          ---:         |<br>
+|---|---|<br>
 | FROM_FNAME   | first name            |<br>
 | FROM_LNAME   | last  name            |<br>
 | FROM_USERNAME| username              |<br>
