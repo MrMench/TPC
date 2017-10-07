@@ -71,11 +71,11 @@ How To Force Reply?<br>
 
 Str On The Text<br>
 <code>$tg->___telegramStr("TEXT");</code><br>
-| Parameter    | Description           |
-| :---         |          ---:         |
-| FROM_FNAME   | first name            |
-| FROM_LNAME   | last  name            |
-| FROM_USERNAME| username              |
-| FROM_IS_BOT  | user is bot bool      |
-| FROM_IS_BOT  | user is bot bool      |
-| FROM_ID      | user id               |
+| Parameter    | Description           |<br>
+| :---         |          ---:         |<br>
+| FROM_FNAME   | first name            |<br>
+| FROM_LNAME   | last  name            |<br>
+| FROM_USERNAME| username              |<br>
+| FROM_IS_BOT  | user is bot bool      |<br>
+| FROM_IS_BOT  | user is bot bool      |<br>
+| FROM_ID      | user id               |<br>
