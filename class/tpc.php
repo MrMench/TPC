@@ -267,6 +267,10 @@ class TPC_MB
         }
     }
 
+    /**
+     * @param string $mode
+     * @return array
+     */
     public function ___KeyboardMode($mode = "NOMARKUP")
     {
         $mode = strtolower($mode);
@@ -444,6 +448,29 @@ class TPC_MB
     }
 
     /**
+     * @return mixed
+     */
+    public function _getMe()
+    {
+        return $this->mench("getMe", []);
+    }
+
+    /**
+     * @param $user_id
+     * @return mixed
+     */
+    public function _getUserProfilePhoto($user_id)
+    {
+        $res = $this->mench("getUserProfilePhotos", [
+            "user_id" => $user_id
+        ]);
+        $photo = $res->result->photos;
+        $photo = $photo[0];
+        $file_id = $photo[count($photo)- 1]->file_id;
+        return $file_id;
+    }
+
+    /**
      * @param string $phone_number
      * @param string $first_name
      * @param string $last_name
@@ -475,7 +502,15 @@ class TPC_MB
      */
     public function ___telegramStr($message_text)
     {
-        $str = str_replace("FROM_FNAME", $this->update->message->from->first_name, $message_text);
+
+        $str = str_replace("FOR_FNAME", $this->update->message->forward_from->first_name, $message_text);
+        $str = str_replace("FOR_LNAME", $this->update->message->forward_from->last_name, $str);
+        $str = str_replace("FOR_USERNAME", $this->update->message->forward_from->username, $str);
+        $str = str_replace("FOR_IS_BOT", $this->update->message->forward_from->is_bot, $str);
+        $str = str_replace("FOR_LANG_CODE", $this->update->message->forward_from->language_code, $str);
+        $str = str_replace("FOR_ID", $this->update->message->forward_from->id, $str);
+
+        $str = str_replace("FROM_FNAME", $this->update->message->from->first_name, $str);
         $str = str_replace("FROM_LNAME", $this->update->message->from->last_name, $str);
         $str = str_replace("FROM_USERNAME", $this->update->message->from->username, $str);
         $str = str_replace("FROM_IS_BOT", $this->update->message->from->is_bot, $str);
@@ -495,7 +530,7 @@ class TPC_MB
         $str = str_replace("CHAT_BIG_PHOTO", $this->update->message->chat->photo->big_file_id, $str);
         $str = str_replace("CHAT_SMALL_PHOTO", $this->update->message->chat->photo->small_file_id, $str);
 
-        return$str;
+        return $str;
     }
 
     /**
