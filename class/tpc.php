@@ -466,7 +466,7 @@ class TPC_MB
         ]);
         $photo = $res->result->photos;
         $photo = $photo[0];
-        $file_id = $photo[count($photo)- 1]->file_id;
+        $file_id = $photo[count($photo) - 1]->file_id;
         return $file_id;
     }
 
@@ -1374,5 +1374,101 @@ class JalaliDate
             $gd -= $v;
         }
         return ($mod === '') ? array($gy, $gm, $gd) : $gy . $mod . $gm . $mod . $gd;
+    }
+}
+
+
+class ZarinPal
+{
+    private $Merchant;
+    private $Title;
+    private $Description;
+    private $Amount;
+    private $Email;
+    private $Mobile;
+    private $CallbackURL;
+    private $Authority;
+    private $ZarinGate;
+
+    /**
+     * ZarinPal constructor.
+     * @param $Merchant
+     * @param string $Authority
+     * @param string $Title
+     * @param string $Description
+     * @param string $Amount
+     * @param string $Email
+     * @param string $Mobile
+     * @param $CallbackURL
+     */
+    public function __construct($Merchant, $Authority = "", $Title = "", $Description = "", $Amount = "", $Email = "", $Mobile = "", $CallbackURL)
+    {
+        $this->Merchant = $Merchant;
+        $this->Authority = $Authority;
+        $this->Title = $Title;
+        $this->Description = $Description;
+        $this->Amount = $Amount;
+        $this->Email = $Email;
+        $this->Mobile = $Mobile;
+        $this->CallbackURL = $CallbackURL;
+    }
+
+    /**
+     * @param mixed $ZarinGate
+     */
+    public function setZarinGate($ZarinGate)
+    {
+        $this->ZarinGate = $ZarinGate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZarinGate()
+    {
+        return $this->ZarinGate;
+    }
+
+    public function CreatePayment()
+    {
+        $client = new SoapClient('https://www.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
+
+        $result = $client->PaymentRequest(
+            [
+                'MerchantID' => $this->Merchant,
+                'Amount' => $this->Amount,
+                'Description' => $this->Description,
+                'Email' => $this->Email,
+                'Mobile' => $this->Mobile,
+                'CallbackURL' => $this->CallbackURL,
+            ]
+        );
+        if ($result->Status == 100) {
+            if ($this->getZarinGate() == true) {
+                $zarin = "/ZarinGate";
+            }
+            return ["ok" => true, "url" => "https://www.zarinpal.com/pg/StartPay/" . $result->Authority . $zarin];
+        } else {
+            return ["ok" => false, "error" => $result->Status];
+        }
+    }
+
+    public function CheckPay()
+    {
+        $client = new SoapClient('https://www.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
+
+        $result = $client->PaymentVerification(
+            [
+                'MerchantID' => $this->Merchant,
+                'Authority' => $this->Authority,
+                'Amount' => $this->Amount,
+            ]
+        );
+
+        if ($result->Status == 100) {
+            return ["ok" => true, "ref_id" => $result->RefID];
+        } else {
+            return ["ok" => false, "error" => $result->Status];
+        }
     }
 }
