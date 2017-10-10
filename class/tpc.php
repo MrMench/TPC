@@ -626,6 +626,35 @@ class TPC_MB
 
 
     /**
+     * @param array $items EXAMPLE ||||
+     * [
+     * [item1], [item2], [item3], [item4], [item5]
+     * ]
+     * @return mixed
+     */
+    public function __answerInlineQuery($items = [])
+    {
+        return $this->mench("answerInlineQuery", [
+            "inline_query_id" => $this->update->inline_query->id,
+            "results" => json_encode($items)
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param bool $show_alert
+     * @return mixed
+     */
+    public function __answerCallBackquery($text = "Message :) @PayaMofid", $show_alert = true)
+    {
+        return $this->mench("answerCallbackQuery", [
+            "callback_query_id" => $this->update->callback_query->id,
+            "text" => $text,
+            "show_alert" => $show_alert
+        ]);
+    }
+
+    /**
      * @param $method
      * @param array $datas
      * @return mixed
