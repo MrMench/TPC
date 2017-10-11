@@ -8,6 +8,7 @@ Created By <a href="//t.me/mench">Mench</a> And <a href="//t.me/phpbots">PHPBots
 
 # Version
 
+<b> - Version 1-0-6</b> (Send Date : 2017 / 10 / 11 ) (Added Pay.ir Class On TPC)<br>
 <b> - Version 1-0-5</b> (Send Date : 2017 / 10 / 08 ) (Added ZarinPal Payment Class On TPC)<br>
 <b> - Version 1-0-4</b> (Send Date : 2017 / 10 / 07 ) (Bug Fixed)<br>
 <b> - Version 1-0-3</b> (Send Date : 2017 / 10 / 07 ) (Added JalaliDate)<br>
