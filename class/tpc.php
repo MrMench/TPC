@@ -401,7 +401,7 @@ class TPC_MB
      * @param string $chat_id
      * @return mixed
      */
-    public function __sendLocation($latitude = "RESEND", $longitude = "RESEND", $chat_id = "")
+    public function __sendLocation($latitude = "RESEND", $longitude = "RESEND", $live_period = "", $chat_id = "")
     {
         if ($chat_id == "") {
             $chat_id = $this->variable()["from"]["id"];
@@ -414,10 +414,36 @@ class TPC_MB
             "chat_id" => $chat_id,
             "latitude" => $latitude,
             "longitude" => $longitude,
+            "live_period" => $live_period,
             "reply_markup" => json_encode($this->reply_markup),
         ]);
     }
 
+    /**
+     * @param $sticker_set_name
+     * @param string $chat_id
+     * @return mixed
+     */
+    public function __setChatStickerSet($sticker_set_name, $chat_id = "")
+    {
+        if ($chat_id == "") {
+            $chat_id = $this->variable()["from"]["id"];
+        }
+        return $this->mench("setChatStickerSet", [
+            "sticker_set_name" => $sticker_set_name,
+            "chat_id" => $chat_id
+        ]);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function ___getMe()
+    {
+        return $this->mench("getMe", []);
+    }
+    
     /**
      * @param string $latitude
      * @param string $longitude
@@ -1500,4 +1526,51 @@ class ZarinPal
             return ["ok" => false, "error" => $result->Status];
         }
     }
+}
+
+
+class Pay_ir
+{
+    /**
+     * @param $api
+     * @param $amount
+     * @param $redirect
+     * @param null $factorNumber
+     * @return mixed
+     *
+     * Example
+     */
+    public function CreatePayment($api, $amount, $redirect, $factorNumber = null)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://pay.ir/payment/send');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "api=$api&amount=$amount&redirect=$redirect&factorNumber=$factorNumber");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return $res;
+    }
+
+    /**
+     * @param $api
+     * @param $transId
+     * @return mixed
+     */
+    public function CheckPay($api, $transId)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://pay.ir/payment/verify');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "api=$api&transId=$transId");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return $res;
+    }
+
+
+    /*
+     * Pay.ir Form : https://pay.ir/developers/gateway-help#test-api
+     */
 }
